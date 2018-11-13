@@ -49,23 +49,23 @@ void recurse(int a,int b,int radius,int preva, int prevb, int rep)
 	{
 		if((prevb-b)<0){
 			glColor3f(1.0,0.0,0.0);
+			bresenham_circle(a-((3*radius)/2), b, radius/2);
 			bresenham_circle(a, b+((3*radius)/2), radius/2);
 			bresenham_circle(a+((3*radius)/2), b, radius/2);
-			bresenham_circle(a-((3*radius)/2), b, radius/2);
-	
-			recurse(a, b+((3*radius)/2), radius/2,a,b,rep+1);
-    		recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
+			
 			recurse(a-((3*radius)/2), b, radius/2,a,b,rep+1);
+			recurse(a, b+((3*radius)/2), radius/2,a,b,rep+1);
+			recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
 		}
 		if((prevb-b)>0)
 		{
 			glColor3f(0.0,1.0,0.0);
-			bresenham_circle(a, b-((3*radius)/2), radius/2);
 			bresenham_circle(a+((3*radius)/2), b, radius/2);
+			bresenham_circle(a, b-((3*radius)/2), radius/2);
 			bresenham_circle(a-((3*radius)/2), b, radius/2);
-	
+			
+			recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
 			recurse(a, b-((3*radius)/2), radius/2,a,b,rep+1);
-    		recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
 			recurse(a-((3*radius)/2), b, radius/2,a,b,rep+1);
 		}
 	}
@@ -75,13 +75,13 @@ void recurse(int a,int b,int radius,int preva, int prevb, int rep)
 		if((preva-a)<0)
 		{
 			glColor3f(0.0,0.0,1.0);
-			bresenham_circle(a, b-((3*radius)/2), radius/2);
-			bresenham_circle(a+((3*radius)/2), b, radius/2);
 			bresenham_circle(a, b+((3*radius)/2), radius/2);
-	
-			recurse(a, b-((3*radius)/2), radius/2,a,b,rep+1);
-    		recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
+			bresenham_circle(a+((3*radius)/2), b, radius/2);
+			bresenham_circle(a, b-((3*radius)/2), radius/2);
+			
 			recurse(a, b+((3*radius)/2), radius/2,a,b,rep+1);
+			recurse(a+((3*radius)/2), b, radius/2,a,b,rep+1);
+			recurse(a, b-((3*radius)/2), radius/2,a,b,rep+1);
 		}
 		if((preva-a)>0)
 		{
@@ -89,7 +89,7 @@ void recurse(int a,int b,int radius,int preva, int prevb, int rep)
 			bresenham_circle(a, b-((3*radius)/2), radius/2);
 			bresenham_circle(a-((3*radius)/2), b, radius/2);
 			bresenham_circle(a, b+((3*radius)/2), radius/2);
-	
+			
 			recurse(a, b-((3*radius)/2), radius/2,a,b,rep+1);
 			recurse(a-((3*radius)/2), b, radius/2,a,b,rep+1);
 			recurse(a, b+((3*radius)/2), radius/2,a,b,rep+1);
@@ -114,15 +114,15 @@ void draw(void)
 	glFlush();
 	bresenham_circle(0,0,rad);
 	glColor3f(1.0,0.0,0.0);
+	bresenham_circle(0,-(3*rad)/2, rad/2);
 	bresenham_circle(0, (3*rad)/2, rad/2);
 	bresenham_circle((3*rad)/2, 0, rad/2);
-	bresenham_circle(0,-(3*rad)/2, rad/2);
 	bresenham_circle(-(3*rad)/2, 0, rad/2);
 	
+	recurse(-(3*rad)/2, 0, rad/2,0,0,1);	
 	recurse(0, (3*rad)/2, rad/2,0,0,1);
-    recurse((3*rad)/2, 0, rad/2,0,0,1);
+	recurse((3*rad)/2, 0, rad/2,0,0,1);
 	recurse(0,-(3*rad)/2, rad/2,0,0,1);
-	recurse(-(3*rad)/2, 0, rad/2,0,0,1);
 }
 
 void Init(void)
